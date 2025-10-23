@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Editkaro.in — Portfolio</title>
+  <meta name="description" content="Portfolio for Editkaro.in — short-form, long-form, gaming, football edits, eCommerce ads, documentaries, color grading, anime, and ads." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b132b; --card:#1c2541; --muted:#a0aec0; --accent:#ff6b6b; --accent2:#feca57;
+      --radius:16px; --gap:18px; --maxw:1200px;
+      --transition: all 0.3s ease;
+      font-family:'Poppins', sans-serif;
+    }
+
+    *{box-sizing:border-box;}
+    html,body{height:100%;scroll-behavior:smooth;}
+    body{
+      margin:0; background:linear-gradient(135deg,#0b132b 0%,#1d2d50 100%);
+      color:#f8fafc; overflow-x:hidden;
+      display:flex; align-items:flex-start; justify-content:center; padding:30px;
+    }
+
+    .wrap{width:100%; max-width:var(--maxw);}
+
+    header{
+      display:flex; justify-content:space-between; align-items:center;
+      flex-wrap:wrap; gap:16px; margin-bottom:20px;
+    }
+
+    .logo{
+      display:flex; align-items:center; gap:12px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+      font-weight:700; font-size:28px;
+    }
+
+    h1{margin:0; font-size:22px; color:#fff;}
+    .sub{color:var(--muted); font-size:14px;}
+
+    .controls{display:flex; flex-wrap:wrap; gap:12px; align-items:center;}
+
+    .search{
+      padding:10px 14px; border-radius:12px; border:none;
+      background:rgba(255,255,255,0.08); color:#fff; outline:none;
+      transition:var(--transition);
+    }
+    .search:focus{background:rgba(255,255,255,0.15);}
+
+    .filters{display:flex; flex-wrap:wrap; gap:10px;}
+    .filter{
+      padding:8px 14px; border-radius:999px; border:1px solid rgba(255,255,255,0.1);
+      background:rgba(255,255,255,0.05); color:var(--muted);
+      cursor:pointer; transition:var(--transition);
+    }
+    .filter:hover{background:rgba(255,255,255,0.15); color:#fff;}
+    .filter.active{
+      background:linear-gradient(90deg,var(--accent),var(--accent2));
+      color:#0b132b; border:none; box-shadow:0 0 12px rgba(255,107,107,0.4);
+    }
+
+    main{
+      background:rgba(255,255,255,0.05); padding:20px; border-radius:var(--radius);
+      box-shadow:0 8px 30px rgba(0,0,0,0.3);
+      animation:fadeInUp 1s ease both;
+    }
+
+    .grid{
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:var(--gap);
+    }
+
+    .card{
+      background:linear-gradient(160deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02));
+      border:1px solid rgba(255,255,255,0.06); border-radius:var(--radius);
+      overflow:hidden; cursor:pointer; position:relative;
+      transition:var(--transition);
+    }
+
+    .card:hover{
+      transform:translateY(-8px) scale(1.02);
+      box-shadow:0 10px 40px rgba(255,107,107,0.25);
+    }
+
+    .thumb{
+      height:200px; overflow:hidden; position:relative;
+    }
+    .thumb img{
+      width:100%; height:100%; object-fit:cover; display:block;
+      filter:brightness(0.9) contrast(1.05);
+      transition:transform 0.6s ease, filter 0.6s ease;
+    }
+    .card:hover .thumb img{transform:scale(1.1); filter:brightness(1.1);}
+
+    .play{
+      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) scale(1);
+      width:70px; height:70px; border-radius:50%;
+      background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center;
+      font-size:28px; color:white; transition:transform 0.4s ease;
+      box-shadow:0 0 20px rgba(255,255,255,0.2);
+    }
+    .card:hover .play{transform:translate(-50%,-50%) scale(1.15); background:var(--accent); color:#0b132b;}
+
+    .meta{padding:14px;}
+    .title{font-weight:600; font-size:16px; margin-bottom:8px; color:#fff;}
+    .cats{display:flex; flex-wrap:wrap; gap:8px;}
+    .cat{background:rgba(255,255,255,0.08); border-radius:999px; padding:6px 10px; font-size:12px; color:var(--muted);}
+
+    footer{text-align:center; color:var(--muted); margin-top:14px; font-size:13px;}
+
+    /* Lightbox */
+    .lightbox{
+      position:fixed; inset:0; background:rgba(0,0,0,0.9);
+      display:none; align-items:center; justify-content:center;
+      z-index:999; backdrop-filter:blur(6px);
+    }
+    .lightbox.open{display:flex; animation:fadeIn 0.5s ease both;}
+    .player{width:min(95%,1000px);}
+    .player video{width:100%; border-radius:10px;}
+    .close{
+      position:absolute; top:20px; right:30px; font-size:30px; color:#fff;
+      cursor:pointer; transition:var(--transition);
+    }
+    .close:hover{color:var(--accent); transform:scale(1.2);}
+
+    /* Animations */
+    @keyframes fadeInUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;}}
+    @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <div class="logo">Editkaro.in</div>
+        <div class="sub">Creative video editing & social media marketing agency</div>
+      </div>
+      <div class="controls">
+        <input id="search" class="search" type="text" placeholder="Search videos...">
+        <div id="filters" class="filters">
+          <button class="filter active" data-cat="all">All</button>
+          <button class="filter" data-cat="short">Short-form</button>
+          <button class="filter" data-cat="long">Long-form</button>
+          <button class="filter" data-cat="gaming">Gaming</button>
+          <button class="filter" data-cat="football">Football</button>
+          <button class="filter" data-cat="ecommerce">eCommerce</button>
+          <button class="filter" data-cat="doc">Documentary</button>
+          <button class="filter" data-cat="grading">Color Grading</button>
+          <button class="filter" data-cat="anime">Anime</button>
+          <button class="filter" data-cat="ads">Ads</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="gallery" class="grid">
+        <article class="card" data-categories="short,ecommerce" data-title="Instagram Reel — Product Teaser">
+          <div class="thumb" data-src="videos/sample1.mp4">
+            <img src="https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=800" alt="Product Teaser">
+            <div class="play">▶</div>
+          </div>
+          <div class="meta">
+            <div class="title">Instagram Reel — Product Teaser</div>
+            <div class="cats"><span class="cat">Short-form</span><span class="cat">eCommerce</span></div>
+          </div>
+        </article>
+
+        <article class="card" data-categories="long,doc" data-title="Mini Documentary — Street Artists">
+          <div class="thumb" data-src="videos/sample2.mp4">
+            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800" alt="Documentary">
+            <div class="play">▶</div>
+          </div>
+          <div class="meta">
+            <div class="title">Mini Documentary — Street Artists</div>
+            <div class="cats"><span class="cat">Long-form</span><span class="cat">Documentary</span></div>
+          </div>
+        </article>
+
+        <article class="card" data-categories="gaming" data-title="Gaming Montage — Highlights">
+          <div class="thumb" data-src="videos/sample3.mp4">
+            <img src="https://images.unsplash.com/photo-1606112219348-204d7d8b94ee?w=800" alt="Gaming">
+            <div class="play">▶</div>
+          </div>
+          <div class="meta">
+            <div class="title">Gaming Montage — Highlights</div>
+            <div class="cats"><span class="cat">Gaming</span></div>
+          </div>
+        </article>
+
+        <article class="card" data-categories="football,ads" data-title="Football Edit — Fan Reel">
+          <div class="thumb" data-src="videos/sample4.mp4">
+            <img src="https://images.unsplash.com/photo-1509021436665-8f07dbf5bf1d?w=800" alt="Football Edit">
+            <div class="play">▶</div>
+          </div>
+          <div class="meta">
+            <div class="title">Football Edit — Fan Reel</div>
+            <div class="cats"><span class="cat">Football</span><span class="cat">Ads</span></div>
+          </div>
+        </article>
+
+        <article class="card" data-categories="anime,grading" data-title="Anime Style — Color Pop">
+          <div class="thumb" data-src="videos/sample5.mp4">
+            <img src="https://images.unsplash.com/photo-1606111741683-72e0c42f9a94?w=800" alt="Anime Edit">
+            <div class="play">▶</div>
+          </div>
+          <div class="meta">
+            <div class="title">Anime Style — Color Pop</div>
+            <div class="cats"><span class="cat">Anime</span><span class="cat">Color Grading</span></div>
+          </div>
+        </article>
+      </section>
+      <footer>© 2025 Editkaro.in | Crafted with creativity ✨</footer>
+    </main>
+  </div>
+
+  <div id="lightbox" class="lightbox">
+    <div class="player">
+      <span class="close" id="closeLb">✕</span>
+      <video id="lbVideo" controls autoplay></video>
+    </div>
+  </div>
+
+  <script>
+    const filters = document.querySelectorAll('.filter');
+    const cards = document.querySelectorAll('.card');
+    const search = document.getElementById('search');
+
+    filters.forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        filters.forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        const cat = btn.dataset.cat;
+        cards.forEach(card=>{
+          const match = cat==='all' || card.dataset.categories.includes(cat);
+          card.style.display = match ? 'block':'none';
+        });
+      });
+    });
+
+    search.addEventListener('input',()=>{
+      const term = search.value.toLowerCase();
+      cards.forEach(card=>{
+        card.style.display = card.dataset.title.toLowerCase().includes(term)?'block':'none';
+      });
+    });
+
+    // Lightbox logic
+    const lightbox = document.getElementById('lightbox');
+    const lbVideo = document.getElementById('lbVideo');
+    const closeLb = document.getElementById('closeLb');
+
+    document.getElementById('gallery').addEventListener('click',e=>{
+      const card = e.target.closest('.card');
+      if(!card) return;
+      const src = card.querySelector('.thumb').dataset.src;
+      lbVideo.src = src;
+      lightbox.classList.add('open');
+      lbVideo.play();
+    });
+
+    closeLb.addEventListener('click',()=>{
+      lightbox.classList.remove('open');
+      lbVideo.pause();
+      lbVideo.src='';
+    });
+
+    lightbox.addEventListener('click',e=>{ if(e.target===lightbox) closeLb.click(); });
+  </script>
+</body>
+</html>
